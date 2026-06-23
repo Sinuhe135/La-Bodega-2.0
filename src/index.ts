@@ -1,5 +1,6 @@
 import express from 'express'
 import 'dotenv/config'
+import serverless from 'serverless-http'
 
 import authRouter from './modules/auth/auth.router'
 import categoryRouter from './modules/category/category.router'
@@ -15,7 +16,11 @@ app.use('/api/auth', authRouter)
 app.use('/api/category', categoryRouter)
 app.use('/api/account', accountRouter)
 
-const port = env.PORT
-app.listen(port, () => {
-    console.log(`Listening port ${port}...`)
-})
+if (env.NODE_ENV !== 'production') {
+    const port = env.PORT
+    app.listen(port, () => {
+        console.log(`Listening port ${port}...`)
+    })
+}
+
+export const handler = serverless(app)
