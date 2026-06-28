@@ -16,7 +16,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/category', categoryRouter)
 app.use('/api/account', accountRouter)
 
-if (env.NODE_ENV !== 'production') {
+if (env.NODE_ENV === 'local') {
     const port = env.PORT
     app.listen(port, () => {
         console.log(`Listening port ${port}...`)
