@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc --build",
+        "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --platform=node",
         "start": "node ./dist/index.js",
         "start:dev": "nodemon ./src/index.ts",
         "format": "prettier --write .",
@@ -16,7 +16,7 @@
     "license": "ISC",
     "type": "commonjs",
     "dependencies": {
-        "bcrypt": "^6.0.0",
+        "bcryptjs": "^3.0.3",
         "cors": "^2.8.6",
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
@@ -29,6 +29,7 @@
         "@types/express": "^5.0.6",
         "@types/jsonwebtoken": "^9.0.10",
         "@types/node": "^25.8.0",
+        "esbuild": "^0.28.1",
         "nodemon": "^3.1.14",
         "prettier": "3.8.3",
         "ts-node": "^10.9.2",
