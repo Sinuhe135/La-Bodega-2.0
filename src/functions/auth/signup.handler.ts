@@ -4,37 +4,21 @@ import * as authService from '../../modules/auth/auth.service'
 import { LoginDto } from '../../modules/auth/dtos/login.dto'
 import { LoginResponseDto } from '../../modules/auth/dtos/login_response.dto'
 import { AppError } from '../../utils/app_error.utils'
+import { generateLambdaResponse, parseLambdaBody } from '../../utils/lambda.utils'
+import { ErrorResponse } from '../../types/error_response'
 
 export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
-    // Function code
-    console.log('Processing signup request...')
-
     try {
-        const body = JSON.parse(event.body || '{}') as LoginDto
+        const body = parseLambdaBody<LoginDto>(event)
         const jwt = await authService.signup(body.username, body.keyHash)
 
-        const response: LoginResponseDto = {
-            jwt: jwt,
-        }
-        return {
-            statusCode: 200,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(response),
-        }
+        return generateLambdaResponse<LoginResponseDto>(200, { jwt })
     } catch (error) {
         if (error instanceof AppError) {
-            return {
-                statusCode: error.statusCode,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ error: error.message }),
-            }
+            return generateLambdaResponse<ErrorResponse>(error.statusCode, { error: error.message })
         }
 
         console.log(`There was an error: ${error}`)
-        return {
-            statusCode: 500,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ error: 'Internal server error' }),
-        }
+        return generateLambdaResponse<ErrorResponse>(500, { error: 'Internal server error' })
     }
 }
