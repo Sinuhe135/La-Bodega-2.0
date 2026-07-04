@@ -15,6 +15,17 @@ export function parseLambdaBearerToken(event: APIGatewayProxyEventV2): string {
     return token
 }
 
+export function parseLambdaPathParameters<T>(event: APIGatewayProxyEventV2): T {
+    const params = event.pathParameters
+    if (!params) throw new AppError(400, 'Path parameters are required')
+    return params as T
+}
+
+export function parseLambdaQueryParameters<T>(event: APIGatewayProxyEventV2): T {
+    const query = event.queryStringParameters
+    return query ? (query as T) : ({} as T)
+}
+
 export function generateLambdaResponse<dto>(status: number, body: dto): APIGatewayProxyResultV2 {
     return {
         statusCode: status,
