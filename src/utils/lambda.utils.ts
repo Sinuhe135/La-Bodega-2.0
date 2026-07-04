@@ -10,6 +10,11 @@ export function parseLambdaBody<T>(event: APIGatewayProxyEventV2): T {
     }
 }
 
+export function parseLambdaBearerToken(event: APIGatewayProxyEventV2): string {
+    const token = event.headers && event.headers.authorization ? event.headers.authorization.replace('Bearer ', '') : ''
+    return token
+}
+
 export function generateLambdaResponse<dto>(status: number, body: dto): APIGatewayProxyResultV2 {
     return {
         statusCode: status,
