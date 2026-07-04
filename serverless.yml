@@ -1,0 +1,41 @@
+service: labodega-api
+
+useDotenv: true
+
+provider:
+    name: aws
+    runtime: nodejs20.x
+    region: us-east-1
+    httpApi:
+        cors:
+            allowedOrigins:
+                - https://labodega.velazduran.com
+                - http://localhost:3000
+            allowedMethods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+                - OPTIONS
+            allowedHeaders:
+                - Content-Type
+                - Authorization
+            allowCredentials: true
+
+plugins:
+    - serverless-offline
+
+functions:
+    signup:
+        handler: dist/functions/auth/signup.handler
+        events:
+            - httpApi:
+                  path: /auth/signup
+                  method: post
+
+    check:
+        handler: dist/functions/auth/check.handler
+        events:
+            - httpApi:
+                  path: /auth/check
+                  method: get
