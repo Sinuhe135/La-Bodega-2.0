@@ -39,3 +39,17 @@ functions:
             - httpApi:
                   path: /auth/check
                   method: get
+
+    login:
+        handler: dist/functions/auth/login.handler
+        events:
+            - httpApi:
+                  path: /auth/login
+                  method: post
+
+    current:
+        handler: dist/functions/auth/current.handler
+        events:
+            - httpApi:
+                  path: /auth/current
+                  method: get
