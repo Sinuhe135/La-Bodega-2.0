@@ -67,3 +67,17 @@ functions:
             - httpApi:
                   path: /category
                   method: post
+
+    getAllAccountsByCategory:
+        handler: dist/functions/account/get_all_by_category.handler
+        events:
+            - httpApi:
+                  path: /account/all/{categoryId}
+                  method: get
+
+    createAccount:
+        handler: dist/functions/account/create.handler
+        events:
+            - httpApi:
+                  path: /account
+                  method: post
