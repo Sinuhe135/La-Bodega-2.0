@@ -53,3 +53,17 @@ functions:
             - httpApi:
                   path: /auth/current
                   method: get
+
+    getAllCategories:
+        handler: dist/functions/category/get_all.handler
+        events:
+            - httpApi:
+                  path: /category/all
+                  method: get
+
+    createCategory:
+        handler: dist/functions/category/create.handler
+        events:
+            - httpApi:
+                  path: /category
+                  method: post
