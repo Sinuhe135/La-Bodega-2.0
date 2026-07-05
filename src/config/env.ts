@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 const env = {
     MYSQL_HOST: process.env.MYSQL_HOST ?? '',
     MYSQL_USER: process.env.MYSQL_USER ?? '',
